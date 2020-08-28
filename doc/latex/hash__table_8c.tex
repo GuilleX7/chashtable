@@ -1,0 +1,179 @@
+\hypertarget{hash__table_8c}{}\doxysection{src/hash\+\_\+table.c File Reference}
+\label{hash__table_8c}\index{src/hash\_table.c@{src/hash\_table.c}}
+{\ttfamily \#include \char`\"{}hash\+\_\+table.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{hash__table_8c_ae537fef967d9fbfad304aec7b2b85948}\label{hash__table_8c_ae537fef967d9fbfad304aec7b2b85948}} 
+\#define {\bfseries C\+O\+U\+N\+T\+\_\+\+OF}(x)~(sizeof x / sizeof x\mbox{[}0\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{hash__table_8c_ab0a9371ed8c03bd9baa2227326ebd5bd}{hash\+\_\+table\+\_\+init}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}})
+\begin{DoxyCompactList}\small\item\em Initializes an existing hash table structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{hash__table_8c_af49164796bf0ef33554c9ee93363d604}{hash\+\_\+table\+\_\+free}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}})
+\begin{DoxyCompactList}\small\item\em Frees a hash table. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{hash__table_8c_a3a385d36ac9bb8c740ec6f9dd99a865f}{hash\+\_\+table\+\_\+put\+\_\+sized}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}}, char $\ast$key, void $\ast$val, size\+\_\+t val\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Put key-\/value pair into a hash table. \end{DoxyCompactList}\item 
+void $\ast$ \mbox{\hyperlink{hash__table_8c_ac31542eafaf103b9eb2f794e72b298bb}{hash\+\_\+table\+\_\+get}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}}, char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Get the value associated to a key. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{hash__table_8c_af4dfa2eb81814a114372f3a2dc07be80}{hash\+\_\+table\+\_\+remove}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}}, char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Removes an entry from the hash table if it exists. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{hash__table_8c_a501098398585110b19c28750922316e7}{hash\+\_\+table\+\_\+exists}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}}, char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Check if a key already exists. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structhash__table__iterator}{hash\+\_\+table\+\_\+iterator}} \mbox{\hyperlink{hash__table_8c_a5b58afaa85f6af5c58a0cd9f891262bb}{hash\+\_\+table\+\_\+iterator\+\_\+create}} (struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$\mbox{\hyperlink{structhash__table}{hash\+\_\+table}})
+\begin{DoxyCompactList}\small\item\em Initializes a hash table iterator to iterate a given hash table. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structhash__table__entry}{hash\+\_\+table\+\_\+entry}} $\ast$ \mbox{\hyperlink{hash__table_8c_ae5bcf7a013fb5ae3f794a319e56e676d}{hash\+\_\+table\+\_\+iterator\+\_\+next}} (struct \mbox{\hyperlink{structhash__table__iterator}{hash\+\_\+table\+\_\+iterator}} $\ast$iterator)
+\begin{DoxyCompactList}\small\item\em Returns the next pair in the hash table pointed by the iterator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{hash__table_8c_a501098398585110b19c28750922316e7}\label{hash__table_8c_a501098398585110b19c28750922316e7}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_exists@{hash\_table\_exists}}
+\index{hash\_table\_exists@{hash\_table\_exists}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_exists()}{hash\_table\_exists()}}
+{\footnotesize\ttfamily int hash\+\_\+table\+\_\+exists (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table,  }\item[{char $\ast$}]{key }\end{DoxyParamCaption})}
+
+
+
+Check if a key already exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structhash__table}{hash\+\_\+table}}} & Pointer to \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} to search in \\
+\hline
+{\em key} & Pointer to string that will be searched for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Non-\/zero value if key was found, 0 otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{hash__table_8c_af49164796bf0ef33554c9ee93363d604}\label{hash__table_8c_af49164796bf0ef33554c9ee93363d604}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_free@{hash\_table\_free}}
+\index{hash\_table\_free@{hash\_table\_free}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_free()}{hash\_table\_free()}}
+{\footnotesize\ttfamily void hash\+\_\+table\+\_\+free (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table }\end{DoxyParamCaption})}
+
+
+
+Frees a hash table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structhash__table}{hash\+\_\+table}}} & Pointer to the \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} to be freed \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{hash__table_8c_ac31542eafaf103b9eb2f794e72b298bb}\label{hash__table_8c_ac31542eafaf103b9eb2f794e72b298bb}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_get@{hash\_table\_get}}
+\index{hash\_table\_get@{hash\_table\_get}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_get()}{hash\_table\_get()}}
+{\footnotesize\ttfamily void$\ast$ hash\+\_\+table\+\_\+get (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table,  }\item[{char $\ast$}]{key }\end{DoxyParamCaption})}
+
+
+
+Get the value associated to a key. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structhash__table}{hash\+\_\+table}}} & Pointer to \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} to search in \\
+\hline
+{\em key} & Pointer to string that will be searched for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to value if found, null pointer otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{hash__table_8c_ab0a9371ed8c03bd9baa2227326ebd5bd}\label{hash__table_8c_ab0a9371ed8c03bd9baa2227326ebd5bd}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_init@{hash\_table\_init}}
+\index{hash\_table\_init@{hash\_table\_init}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_init()}{hash\_table\_init()}}
+{\footnotesize\ttfamily int hash\+\_\+table\+\_\+init (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table }\end{DoxyParamCaption})}
+
+
+
+Initializes an existing hash table structure. 
+
+\begin{DoxyReturn}{Returns}
+Non-\/zero value if initialization succeded, 0 otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{hash__table_8c_a5b58afaa85f6af5c58a0cd9f891262bb}\label{hash__table_8c_a5b58afaa85f6af5c58a0cd9f891262bb}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_iterator\_create@{hash\_table\_iterator\_create}}
+\index{hash\_table\_iterator\_create@{hash\_table\_iterator\_create}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_iterator\_create()}{hash\_table\_iterator\_create()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structhash__table__iterator}{hash\+\_\+table\+\_\+iterator}} hash\+\_\+table\+\_\+iterator\+\_\+create (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table }\end{DoxyParamCaption})}
+
+
+
+Initializes a hash table iterator to iterate a given hash table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structhash__table}{hash\+\_\+table}}} & Pointer to the hash table to be iterated over \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Iterator for the given hash table 
+\end{DoxyReturn}
+\mbox{\Hypertarget{hash__table_8c_ae5bcf7a013fb5ae3f794a319e56e676d}\label{hash__table_8c_ae5bcf7a013fb5ae3f794a319e56e676d}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_iterator\_next@{hash\_table\_iterator\_next}}
+\index{hash\_table\_iterator\_next@{hash\_table\_iterator\_next}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_iterator\_next()}{hash\_table\_iterator\_next()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structhash__table__entry}{hash\+\_\+table\+\_\+entry}}$\ast$ hash\+\_\+table\+\_\+iterator\+\_\+next (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table__iterator}{hash\+\_\+table\+\_\+iterator}} $\ast$}]{iterator }\end{DoxyParamCaption})}
+
+
+
+Returns the next pair in the hash table pointed by the iterator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em iterator} & Pointer to an initialized iterator \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the next pair in the iteration, or N\+U\+LL if no pair left 
+\end{DoxyReturn}
+\mbox{\Hypertarget{hash__table_8c_a3a385d36ac9bb8c740ec6f9dd99a865f}\label{hash__table_8c_a3a385d36ac9bb8c740ec6f9dd99a865f}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_put\_sized@{hash\_table\_put\_sized}}
+\index{hash\_table\_put\_sized@{hash\_table\_put\_sized}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_put\_sized()}{hash\_table\_put\_sized()}}
+{\footnotesize\ttfamily int hash\+\_\+table\+\_\+put\+\_\+sized (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table,  }\item[{char $\ast$}]{key,  }\item[{void $\ast$}]{val,  }\item[{size\+\_\+t}]{val\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Put key-\/value pair into a hash table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ht} & Pointer to \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} where pair will be inserted \\
+\hline
+{\em key} & Pointer to string used as key. Will be copied in memory. \\
+\hline
+{\em val} & Pointer to the object to be stored. Will be copied in memory \\
+\hline
+{\em size} & Size of value in bytes \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Non-\/zero value if pair was stored successfully, 0 otherwise 
+\end{DoxyReturn}
+\mbox{\Hypertarget{hash__table_8c_af4dfa2eb81814a114372f3a2dc07be80}\label{hash__table_8c_af4dfa2eb81814a114372f3a2dc07be80}} 
+\index{hash\_table.c@{hash\_table.c}!hash\_table\_remove@{hash\_table\_remove}}
+\index{hash\_table\_remove@{hash\_table\_remove}!hash\_table.c@{hash\_table.c}}
+\doxysubsubsection{\texorpdfstring{hash\_table\_remove()}{hash\_table\_remove()}}
+{\footnotesize\ttfamily int hash\+\_\+table\+\_\+remove (\begin{DoxyParamCaption}\item[{struct \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} $\ast$}]{hash\+\_\+table,  }\item[{char $\ast$}]{key }\end{DoxyParamCaption})}
+
+
+
+Removes an entry from the hash table if it exists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \mbox{\hyperlink{structhash__table}{hash\+\_\+table}}} & Pointer to \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} to search in \\
+\hline
+{\em key} & Pointer to string that will be deleted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Non-\/zero value if the pair was removed successfully, 0 otherwise 
+\end{DoxyReturn}

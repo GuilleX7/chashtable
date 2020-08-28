@@ -1,0 +1,56 @@
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+ Simple and lightweight implementation of generic hash tables in strict C89 standard. This implementation doesn\textquotesingle{}t aim to be the best, the fastest or the most lightweight. Just a workaround when a simple generic, dynamic hash table is needed. It uses void pointers to achieve genericity. Memory management calls have been slightly reduced by asking standard library to reserve entire blocks for both struct and dynamic needed memory.
+
+Hash map will automatically double its size and rehash when a pair is added and load factor is greater than 0.\+75, and will reduce by half when a pair is removed and load factor is less than 0.\+15. However, those parameters are modifiable.\hypertarget{index_autotoc_md1}{}\doxysection{Usage}\label{index_autotoc_md1}
+{\bfseries{Usage is straighforward. First, declare a new \mbox{\hyperlink{structhash__table}{hash\+\_\+table}} struct and initialize it\+:}} \begin{DoxyVerb}struct hash_table ht;
+hash_table_init(&ht);
+\end{DoxyVerb}
+
+
+{\bfseries{Putting elements in\+:}} \begin{DoxyVerb}char *key = "some-key-here";
+int value = 123;
+hash_table_put(&ht, key, &value);
+\end{DoxyVerb}
+
+
+When putting objects using a pointer that hides size information from sizeof operator, you need to use {\bfseries{hash\+\_\+table\+\_\+put\+\_\+sized}}, as the library can\textquotesingle{}t know the size of the entire object. \begin{DoxyVerb}char *key = "some-key-here";
+char *val = "sizeof can't guess my size haha!";
+hash_table_put_sized(&ht, key, &value, strlen(val) + 1);
+\end{DoxyVerb}
+
+
+{\bfseries{Getting elements\+:}} \begin{DoxyVerb}char *key = "previous-used-key";
+/* No need to cast from void* in C */
+int *retrieved_ptr = hash_table_get(&ht, key);
+if (retrieved_ptr)
+    /* Value is at *retrieved_ptr; */
+\end{DoxyVerb}
+
+
+{\bfseries{Removing elements\+:}} \begin{DoxyVerb}char *key = "previous-used-key";
+hash_table_remove(&ht, key);
+\end{DoxyVerb}
+
+
+{\bfseries{Checking for existence\+:}} \begin{DoxyVerb}char *key = "previous-used-or-not-key";
+if (hash_table_exists(&ht, key)) {
+    /* It already exists */
+} else {
+    /* It doesn't exists yet */
+}
+\end{DoxyVerb}
+
+
+{\bfseries{Freeing the hash table}} (mandatory, otherwise bad things will happen...)\+: \begin{DoxyVerb}hash_table_free(&ht);
+\end{DoxyVerb}
+
+
+{\bfseries{Iterating over the \mbox{\hyperlink{structhash__table}{hash\+\_\+table}}\+:}} Just declare a new iterator and use a loop to iterate over\+: \begin{DoxyVerb}struct hash_table_iterator it = hash_table_iterator_create(&ht);
+struct hash_table_entry *entry = { 0 }; /* null pointer */
+while ((entry = hash_table_iterator_next(&it)) {
+    /* entry->key is the pointer to the key
+       entry->val is the pointer to the object */
+}
+\end{DoxyVerb}
+ 
