@@ -29,7 +29,7 @@ When putting objects using a pointer that hides size information from sizeof ope
     /* No need to cast from void* in C */
     int *retrieved_ptr = hash_table_get(&ht, key);
     if (retrieved_ptr)
-	    /* Value is at *retrieved_ptr; */
+	    /* Value is at *retrieved_ptr */
 
 **Removing elements:**
 
