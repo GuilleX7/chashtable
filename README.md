@@ -20,8 +20,8 @@ Hash map will automatically double its size and rehash when a pair is added and 
 When putting objects using a pointer that hides size information from sizeof operator, you need to use **hash_table_put_sized**, as the library can't know the size of the entire object.
 
     char *key = "some-key-here";
-    char *val = "sizeof can't guess my size haha!";
-    hash_table_put_sized(&ht, key, &value, strlen(val) + 1);
+    char *value = "sizeof can't guess my size haha!";
+    hash_table_put_sized(&ht, key, &value, strlen(value) + 1);
 
 **Getting elements:**
 
