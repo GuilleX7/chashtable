@@ -1,18 +1,25 @@
 /** @file hash_table.c */
 
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif /* _MSC_VER */
+
+#include <string.h>
+#include <stdlib.h>
+
 #include "hash_table.h"
+
 #define COUNT_OF(x) (sizeof x / sizeof x[0])
 
 /**
-		@brief Reserves memory for a new entry and copies the
-		specified data within
-		@param key Pointer to string that will be key (will be copied)
-		@param val Pointer to object to be saved (will be copied)
-		@param val_size Size of the object to be saved
+		@brief Creates a new entry with a given key and value
+		@param key Pointer to the string that will be used as the entry key (will be copied)
+		@param value Pointer to the value to be saved (will be copied)
+		@param value_size Size of the value to be saved
 		@return Pointer to the allocated entry if it could be allocated,
 						null pointer otherwise
 */
-static struct hash_table_entry *hash_table_create_entry(char *key, void *val, size_t val_size);
+static struct hash_table_entry *hash_table_create_entry(char *key, void *value, size_t value_size);
 
 /**
 		@brief Frees a given entry
@@ -21,8 +28,7 @@ static struct hash_table_entry *hash_table_create_entry(char *key, void *val, si
 static void hash_table_free_entry(struct hash_table_entry *entry);
 
 /**
-		@brief Frees a given entry and its successives recursively
-		Sets the given pointer to a null pointer
+		@brief Frees all entries linked with a given entry (inclusive)
 		@param entry Pointer to the starting entry to be freed
 */
 static void hash_table_free_entries(struct hash_table_entry *entry);
@@ -31,18 +37,18 @@ static void hash_table_free_entries(struct hash_table_entry *entry);
 		@brief Calculates the hash for a given key
 		@param hash Pointer to the hash table where the key will be used
 		@param key Pointer to the string to be hashed
-		@return The computated hash
+		@return The computed hash
 */
 static size_t hash_table_hash(size_t size, char *key);
 
 /**
 		@brief Resize and rehash the given hash table
-		@param hash_table Pointer to the hash_table to be rehashed
+		@param hash_table Pointer to the hash table to be rehashed
 		@param size_index Index of the new size to be used
 */
 static void hash_table_rehash(struct hash_table *hash_table, size_t size_index);
 
-/** @brief Possible sizes for hash table */
+/** @brief Possible sizes for the hash table */
 static size_t const hash_sizes[] = {
 	53, 101, 211, 503, 1553, 3407,
 	6803, 12503, 25013, 50261, 104729, 250007,
@@ -81,19 +87,19 @@ void hash_table_free(struct hash_table *hash_table) {
 	free(hash_table->entries);
 }
 
-int hash_table_put_sized(struct hash_table *hash_table, char *key, void *val, size_t val_size) {
+int hash_table_put_sized(struct hash_table *hash_table, char *key, void *value, size_t value_size) {
 	size_t hash = 0;
 	struct hash_table_entry *previous_entry = { 0 };
 	struct hash_table_entry *entry = { 0 };
 	struct hash_table_entry *new_entry = { 0 };
 	
-	if (!hash_table || !key || !val) {
+	if (!hash_table || !key || !value) {
 		return 0;
 	}
 
 	hash = hash_table_hash(hash_table->size_index, key);
 	entry = hash_table->entries[hash];
-	new_entry = hash_table_create_entry(key, val, val_size);
+	new_entry = hash_table_create_entry(key, value, value_size);
 
 	if (!new_entry) {
 		return 0;
@@ -141,7 +147,7 @@ void *hash_table_get(struct hash_table *hash_table, char *key) {
 		entry = entry->next;
 	}
 
-	return entry ? entry->val : 0;
+	return entry ? entry->value : 0;
 }
 
 int hash_table_remove(struct hash_table *hash_table, char *key) {
@@ -225,21 +231,21 @@ struct hash_table_entry *hash_table_iterator_next(struct hash_table_iterator *it
 	return iterator->entry;
 }
 
-struct hash_table_entry *hash_table_create_entry(char *key, void *val, size_t val_size) {
+struct hash_table_entry *hash_table_create_entry(char *key, void *value, size_t value_size) {
 	struct hash_table_entry *entry = { 0 };
-	size_t key_len = 0;
+	size_t key_length = 0;
 
-	if (!key || !val) {
+	if (!key || !value) {
 		return 0;
 	}
 
-	key_len = strlen(key) + 1;
-	entry = malloc(sizeof(struct hash_table_entry) + key_len + val_size);
+	key_length = strlen(key) + 1;
+	entry = malloc(sizeof(struct hash_table_entry) + key_length + value_size);
 	if (entry) {
 		entry->key = (char *) entry + sizeof(struct hash_table_entry);
 		strcpy(entry->key, key);
-		entry->val = (char *) entry->key + key_len;
-		memcpy(entry->val, val, val_size);
+		entry->value = (char *) entry->key + key_length;
+		memcpy(entry->value, value, value_size);
 	}
 
 	return entry;

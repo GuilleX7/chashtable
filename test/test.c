@@ -1,3 +1,4 @@
+#include <string.h>
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif /* _MSC_VER */
@@ -39,60 +40,60 @@ int main(void) {
 		assert(!hash_table_iterator_next(&it));
 	
 	/* hash_table_put (1) */
-	strcpy(key, "a");
+	strcpy_s(key, sizeof(key), "a");
 	assert(hash_table_put(&ht, key, &a));
-	strcpy(key, "b");
+	strcpy_s(key, sizeof(key), "b");
 	assert(hash_table_put(&ht, key, &b));
-	strcpy(key, "c");
+	strcpy_s(key, sizeof(key), "c");
 	assert(hash_table_put(&ht, key, &c));
-	strcpy(key, "d");
+	strcpy_s(key, sizeof(key), "d");
 	assert(hash_table_put(&ht, key, &d));
-	strcpy(key, "st_e");
+	strcpy_s(key, sizeof(key), "st_e");
 	assert(hash_table_put(&ht, key, &st_e));
-	strcpy(key, "arr");
+	strcpy_s(key, sizeof(key), "arr");
 	assert(hash_table_put(&ht, key, &arr));
-	strcpy(key, "arr_ptr");
+	strcpy_s(key, sizeof(key), "arr_ptr");
 	assert(hash_table_put_sized(&ht, key, arr_ptr, sizeof(arr)));
 
 	/* size check */
 	assert(ht.entry_count == TOTAL_PAIRS);
 
 	/* hash_table_exists */
-	strcpy(key, "a");
+	strcpy_s(key, sizeof(key), "a");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "b");
+	strcpy_s(key, sizeof(key), "b");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "c");
+	strcpy_s(key, sizeof(key), "c");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "d");
+	strcpy_s(key, sizeof(key), "d");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "st_e");
+	strcpy_s(key, sizeof(key), "st_e");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "arr");
+	strcpy_s(key, sizeof(key), "arr");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "arr_ptr");
+	strcpy_s(key, sizeof(key), "arr_ptr");
 	assert(hash_table_exists(&ht, key));
-	strcpy(key, "dadsads");
+	strcpy_s(key, sizeof(key), "dadsads");
 	assert(!hash_table_exists(&ht, key));
 
 	/* hash_table_get (1) */
-	strcpy(key, "a");
+	strcpy_s(key, sizeof(key), "a");
 	assert(*((int *) hash_table_get(&ht, key)) == EXPECTED_INT);
-	strcpy(key, "b");
+	strcpy_s(key, sizeof(key), "b");
 	assert(*((unsigned int *) hash_table_get(&ht, key)) == EXPECTED_UINT);
-	strcpy(key, "c");
+	strcpy_s(key, sizeof(key), "c");
 	assert(*((float *) hash_table_get(&ht, key)) == EXPECTED_FLOAT);
-	strcpy(key, "d");
+	strcpy_s(key, sizeof(key), "d");
 	assert(*((double *) hash_table_get(&ht, key)) == EXPECTED_DOUBLE);
-	strcpy(key, "st_e");
+	strcpy_s(key, sizeof(key), "st_e");
 	assert(!strcmp(((struct st_t *) hash_table_get(&ht, key))->chars, EXPECTED_STRING));
-	strcpy(key, "arr");
+	strcpy_s(key, sizeof(key), "arr");
 	arr_ptr = ((unsigned int *) hash_table_get(&ht, key));
 	for (i = 1; i < 6; i++) {
 		assert(*arr_ptr == i);
 		arr_ptr++;
 	}
-	strcpy(key, "arr_ptr");
+	strcpy_s(key, sizeof(key), "arr_ptr");
 	arr_ptr = ((unsigned int *) hash_table_get(&ht, key));
 	for (i = 1; i < 6; i++) {
 		assert(*arr_ptr == i);
@@ -100,7 +101,7 @@ int main(void) {
 	}
 
 	/* hash_table_put (2) */
-	strcpy(key, "a");
+	strcpy_s(key, sizeof(key), "a");
 	a = 1;
 	assert(hash_table_put(&ht, key, &a));
 	
@@ -109,7 +110,7 @@ int main(void) {
 
 	/* hash_table_remove */
 	assert(hash_table_remove(&ht, key));
-	strcpy(key, "dfdsf");
+	strcpy_s(key, sizeof(key), "dfdsf");
 	assert(!hash_table_remove(&ht, key));
 
 	/* size check */
@@ -120,7 +121,7 @@ int main(void) {
 	i = 0;
 	while ((entry = hash_table_iterator_next(&it))) {
 		assert(entry->key);
-		assert(entry->val);
+		assert(entry->value);
 		i++;
 	}
 	assert(i == TOTAL_PAIRS - 1);
